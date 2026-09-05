@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Departments</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef3f7;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .primary {
+            background: #1565c0;
+            color: white;
+        }
+
+        .edit {
+            background: #f9a825;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Department Management</h1>
+
+    <a
+        href="/admin/departments/new"
+        class="btn primary">
+        + Add Department
+    </a>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Department</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="department : ${departments}">
+
+            <td th:text="${department.id}">
+            </td>
+
+            <td th:text="${department.name}">
+            </td>
+
+            <td th:text="${department.description}">
+            </td>
+
+            <td>
+
+                <a
+                    th:href="@{/admin/departments/{id}/edit(id=${department.id})}"
+                    class="btn edit">
+
+                    Edit
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="/admin/dashboard">
+        ← Admin Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

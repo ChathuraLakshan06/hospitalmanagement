@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Patient Registration</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+            padding: 30px;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${patient.id == null
+        ? 'Register Patient'
+        : 'Edit Patient'}">
+    </h1>
+
+    <form
+        th:action="@{/patients/save}"
+        th:object="${patient}"
+        method="post">
+
+        <input
+            type="hidden"
+            th:field="*{id}">
+
+        <label>First Name</label>
+
+        <input
+            type="text"
+            th:field="*{firstName}">
+
+        <div
+            class="error"
+            th:errors="*{firstName}">
+        </div>
+
+
+        <label>Last Name</label>
+
+        <input
+            type="text"
+            th:field="*{lastName}">
+
+        <div
+            class="error"
+            th:errors="*{lastName}">
+        </div>
+
+
+        <label>Date of Birth</label>
+
+        <input
+            type="date"
+            th:field="*{dateOfBirth}">
+
+
+        <label>Gender</label>
+
+        <select th:field="*{gender}">
+
+            <option value="">
+                Select Gender
+            </option>
+
+            <option value="Male">
+                Male
+            </option>
+
+            <option value="Female">
+                Female
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+        <div
+            class="error"
+            th:errors="*{gender}">
+        </div>
+
+
+        <label>Phone Number</label>
+
+        <input
+            type="text"
+            th:field="*{phone}">
+
+
+        <label>Address</label>
+
+        <textarea
+            th:field="*{address}">
+        </textarea>
+
+
+        <label>Blood Group</label>
+
+        <select
+            th:field="*{bloodGroup}">
+
+            <option value="">
+                Select Blood Group
+            </option>
+
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+
+        </select>
+
+        <button type="submit">
+            Save Patient
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/patients">
+        ← Back to Patients
+    </a>
+
+</div>
+
+</body>
+
+</html>

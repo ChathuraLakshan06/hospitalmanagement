@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <a href="/patients">
+    Manage Patients
+</a>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+<h3>Management</h3>
+
+<p>
+    <a href="/patients">
+        Patient Management
+    </a>
+</p>
+
+<p>
+    <a href="/admin/departments">
+        Department Management
+    </a>
+</p>
+<p>
+    <a href="/appointments">
+        Appointment Management
+    </a>
+</p>
+<p>
+    <a href="/doctor/medical-records">
+        Medical Records
+    </a>
+</p>
+<p>
+    <a href="/admin/doctors">
+        Doctor Management
+    </a>
+</p>
+<h1>Admin Dashboard</h1>
+
+<p>Welcome Administrator</p>
+
+<h3>Administrator Functions</h3>
+
+<ul>
+    <li>User Management</li>
+    <li>Doctor Management</li>
+    <li>Patient Management</li>
+    <li>Appointments</li>
+    <li>Reports</li>
+</ul>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>

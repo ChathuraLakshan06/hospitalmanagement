@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Request Laboratory Test</title>
+
+</head>
+
+<body>
+
+<h1>Request Laboratory Test</h1>
+
+<form
+    th:action="@{/doctor/lab-tests/save}"
+    th:object="${laboratoryTest}"
+    method="post">
+
+    <label>Patient</label>
+
+    <select
+        name="patientId"
+        required>
+
+        <option value="">
+            Select Patient
+        </option>
+
+        <option
+            th:each="patient : ${patients}"
+            th:value="${patient.id}"
+            th:text="${patient.patientNumber
+                + ' - '
+                + patient.firstName
+                + ' '
+                + patient.lastName}"
+            th:selected="${selectedPatientId != null
+                and selectedPatientId == patient.id}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Test Name</label>
+
+    <select
+        th:field="*{testName}"
+        required>
+
+        <option value="">
+            Select Test
+        </option>
+
+        <option value="Full Blood Count">
+            Full Blood Count
+        </option>
+
+        <option value="Blood Glucose">
+            Blood Glucose
+        </option>
+
+        <option value="Lipid Profile">
+            Lipid Profile
+        </option>
+
+        <option value="Liver Function Test">
+            Liver Function Test
+        </option>
+
+        <option value="Urine Full Report">
+            Urine Full Report
+        </option>
+
+        <option value="Thyroid Function Test">
+            Thyroid Function Test
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Sample Type</label>
+
+    <select th:field="*{sampleType}">
+
+        <option value="">
+            Select Sample
+        </option>
+
+        <option value="Blood">
+            Blood
+        </option>
+
+        <option value="Urine">
+            Urine
+        </option>
+
+        <option value="Stool">
+            Stool
+        </option>
+
+        <option value="Swab">
+            Swab
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Reason / Clinical Information</label>
+
+    <br>
+
+    <textarea
+        th:field="*{reason}"
+        rows="5"
+        cols="60">
+    </textarea>
+
+    <br>
+
+    <button type="submit">
+        Request Test
+    </button>
+
+</form>
+
+<br>
+
+<a href="/doctor/lab-tests">
+    ← Back
+</a>
+
+</body>
+
+</html>

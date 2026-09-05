@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Dashboard</title>
+</head>
+
+<body>
+
+<h1>Doctor Dashboard</h1>
+
+<p>Welcome Doctor</p>
+<p>
+    <a href="/doctor/medical-records">
+        Electronic Medical Records
+    </a>
+</p>
+<p>
+    <a href="/doctor/lab-tests">
+        Laboratory Tests
+    </a>
+</p>
+
+<ul>
+    <li>View Patients</li>
+    <li>View Appointments</li>
+    <li>Medical Records</li>
+    <li>Diagnosis</li>
+    <li>Prescriptions</li>
+</ul>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>

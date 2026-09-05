@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <a href="/patients">
+    Manage Patients
+</a>
+<head>
+    <title>Reception Dashboard</title>
+</head>
+
+<body>
+
+<h1>Receptionist Dashboard</h1>
+
+<p>Welcome Receptionist</p>
+<p>
+    <a href="/appointments">
+        Appointment Management
+    </a>
+</p>
+
+<ul>
+    <li>Register Patient</li>
+    <li>Search Patient</li>
+    <li>Book Appointment</li>
+    <li>Cancel Appointment</li>
+    <li>Reschedule Appointment</li>
+</ul>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+
+</body>
+</html>

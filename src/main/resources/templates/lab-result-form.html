@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Laboratory Result</title>
+
+</head>
+
+<body>
+
+<h1>Enter Laboratory Result</h1>
+
+<p>
+
+    <strong>Patient:</strong>
+
+    <span
+        th:text="${test.patient.patientNumber}">
+    </span>
+
+    -
+
+    <span
+        th:text="${test.patient.firstName}">
+    </span>
+
+    <span
+        th:text="${test.patient.lastName}">
+    </span>
+
+</p>
+
+<p>
+
+    <strong>Test:</strong>
+
+    <span
+        th:text="${test.testName}">
+    </span>
+
+</p>
+
+
+<form
+    th:action="@{/lab/lab-tests/{id}/result(id=${test.id})}"
+    method="post">
+
+    <label>Result</label>
+
+    <br>
+
+    <textarea
+        name="result"
+        rows="7"
+        cols="70"
+        required>
+    </textarea>
+
+    <br><br>
+
+
+    <label>Reference Range</label>
+
+    <br>
+
+    <input
+        type="text"
+        name="referenceRange"
+        size="60">
+
+    <br><br>
+
+
+    <label>Notes</label>
+
+    <br>
+
+    <textarea
+        name="notes"
+        rows="5"
+        cols="70">
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Complete Test
+    </button>
+
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Appointment</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        textarea {
+            height: 90px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            border: none;
+            background: #1565c0;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1
+        th:text="${appointment.id == null
+        ? 'Book Appointment'
+        : 'Reschedule Appointment'}">
+    </h1>
+
+    <form
+        th:action="@{/appointments/save}"
+        th:object="${appointment}"
+        method="post">
+
+        <input
+            type="hidden"
+            th:field="*{id}">
+
+
+        <label>Patient</label>
+
+        <select
+            name="patientId"
+            required>
+
+            <option value="">
+                Select Patient
+            </option>
+
+            <option
+                th:each="patient : ${patients}"
+                th:value="${patient.id}"
+                th:selected="${appointment.patient != null
+                    and appointment.patient.id == patient.id}">
+
+                <span
+                    th:text="${patient.patientNumber
+                    + ' - '
+                    + patient.firstName
+                    + ' '
+                    + patient.lastName}">
+                </span>
+
+            </option>
+
+        </select>
+
+
+        <label>Doctor</label>
+
+        <select
+            name="doctorId"
+            required>
+
+            <option value="">
+                Select Doctor
+            </option>
+
+            <option
+                th:each="doctor : ${doctors}"
+                th:value="${doctor.id}"
+                th:selected="${appointment.doctor != null
+                    and appointment.doctor.id == doctor.id}"
+                th:text="${'Dr. '
+                    + doctor.firstName
+                    + ' '
+                    + doctor.lastName
+                    + ' - '
+                    + doctor.specialization
+                    + ' - '
+                    + doctor.department.name}">
+            </option>
+
+        </select>
+
+
+        <label>Appointment Date</label>
+
+        <input
+            type="date"
+            th:field="*{appointmentDate}">
+
+        <div
+            class="error"
+            th:errors="*{appointmentDate}">
+        </div>
+
+
+        <label>Appointment Time</label>
+
+        <input
+            type="time"
+            th:field="*{appointmentTime}">
+
+        <div
+            class="error"
+            th:errors="*{appointmentTime}">
+        </div>
+
+
+        <label>Reason / Purpose</label>
+
+        <textarea
+            th:field="*{reason}"
+            placeholder="Example: Chest pain consultation">
+        </textarea>
+
+
+        <button
+            type="submit"
+            th:text="${appointment.id == null
+                ? 'Book Appointment'
+                : 'Save Reschedule'}">
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/appointments">
+        ← Back to Appointments
+    </a>
+
+</div>
+
+</body>
+
+</html>

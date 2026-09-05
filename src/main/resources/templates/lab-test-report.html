@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Laboratory Report</title>
+
+</head>
+
+<body>
+
+<h1>Laboratory Test Report</h1>
+
+<hr>
+
+<p>
+    <strong>Patient Number:</strong>
+
+    <span
+        th:text="${test.patient.patientNumber}">
+    </span>
+</p>
+
+<p>
+    <strong>Patient Name:</strong>
+
+    <span
+        th:text="${test.patient.firstName}">
+    </span>
+
+    <span
+        th:text="${test.patient.lastName}">
+    </span>
+</p>
+
+<p>
+    <strong>Test:</strong>
+
+    <span
+        th:text="${test.testName}">
+    </span>
+</p>
+
+<p>
+    <strong>Sample:</strong>
+
+    <span
+        th:text="${test.sampleType}">
+    </span>
+</p>
+
+<p>
+    <strong>Status:</strong>
+
+    <span
+        th:text="${test.status}">
+    </span>
+</p>
+
+<hr>
+
+<h3>Result</h3>
+
+<p
+    th:text="${test.result}">
+</p>
+
+<h3>Reference Range</h3>
+
+<p
+    th:text="${test.referenceRange}">
+</p>
+
+<h3>Laboratory Notes</h3>
+
+<p
+    th:text="${test.notes}">
+</p>
+
+<hr>
+
+<p>
+    <strong>Requested By:</strong>
+
+    <span
+        th:text="${test.requestedBy}">
+    </span>
+</p>
+
+<p>
+    <strong>Requested At:</strong>
+
+    <span
+        th:text="${test.requestedAt}">
+    </span>
+</p>
+
+<p>
+    <strong>Sample Collected:</strong>
+
+    <span
+        th:text="${test.sampleCollectedAt}">
+    </span>
+</p>
+
+<p>
+    <strong>Completed At:</strong>
+
+    <span
+        th:text="${test.completedAt}">
+    </span>
+</p>
+
+</body>
+
+</html>

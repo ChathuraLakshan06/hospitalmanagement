@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Medical Records</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef3f7;
+        }
+
+        .btn {
+            padding: 9px 13px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .history {
+            background: #1565c0;
+            color: white;
+        }
+
+        .new {
+            background: #2e7d32;
+            color: white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Electronic Medical Records</h1>
+
+    <p>
+        Select a patient to view medical history
+        or create a new medical record.
+    </p>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>Patient No.</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Blood Group</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="patient : ${patients}">
+
+            <td
+                th:text="${patient.patientNumber}">
+            </td>
+
+            <td>
+
+                <span
+                    th:text="${patient.firstName}">
+                </span>
+
+                <span
+                    th:text="${patient.lastName}">
+                </span>
+
+            </td>
+
+            <td
+                th:text="${patient.gender}">
+            </td>
+
+            <td
+                th:text="${patient.dateOfBirth}">
+            </td>
+
+            <td
+                th:text="${patient.bloodGroup}">
+            </td>
+
+            <td>
+
+                <a
+                    th:href="@{/doctor/medical-records/patient/{id}(id=${patient.id})}"
+                    class="btn history">
+
+                    View History
+
+                </a>
+
+                <a
+                    th:href="@{/doctor/medical-records/new(patientId=${patient.id})}"
+                    class="btn new">
+
+                    + New Record
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="/doctor/dashboard">
+        ← Doctor Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>

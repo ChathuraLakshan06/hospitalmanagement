@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Patients</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #1565c0;
+            color: white;
+        }
+
+        .btn-edit {
+            background: #f9a825;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #c62828;
+            color: white;
+        }
+
+        input {
+            padding: 10px;
+            width: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef3f7;
+        }
+
+        form.inline {
+            display: inline;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Patient Management</h1>
+
+    <div class="top-section">
+
+        <form
+            action="/patients"
+            method="get">
+
+            <input
+                type="text"
+                name="keyword"
+                th:value="${keyword}"
+                placeholder="Search patient...">
+
+            <button
+                class="btn btn-primary"
+                type="submit">
+                Search
+            </button>
+
+        </form>
+
+        <a
+            href="/patients/new"
+            class="btn btn-primary">
+            + Register Patient
+        </a>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>Patient No.</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Date of Birth</th>
+            <th>Phone</th>
+            <th>Blood Group</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="patient : ${patients}">
+
+            <td th:text="${patient.patientNumber}">
+            </td>
+
+            <td>
+                <span
+                    th:text="${patient.firstName}">
+                </span>
+
+                <span
+                    th:text="${patient.lastName}">
+                </span>
+            </td>
+
+            <td th:text="${patient.gender}">
+            </td>
+
+            <td th:text="${patient.dateOfBirth}">
+            </td>
+
+            <td th:text="${patient.phone}">
+            </td>
+
+            <td th:text="${patient.bloodGroup}">
+            </td>
+
+            <td>
+
+                <a
+                    th:href="@{/patients/{id}/edit(id=${patient.id})}"
+                    class="btn btn-edit">
+                    Edit
+                </a>
+
+                <form
+                    th:action="@{/patients/{id}/delete(id=${patient.id})}"
+                    method="post"
+                    class="inline">
+
+                    <button
+                        type="submit"
+                        class="btn btn-delete"
+                        onclick="return confirm('Delete this patient?')">
+
+                        Delete
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

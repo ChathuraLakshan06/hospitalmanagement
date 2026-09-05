@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Medical Record</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .patient-box {
+            background: #eef5fb;
+            padding: 15px;
+            border-radius: 7px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        textarea {
+            min-height: 90px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>New Medical Record</h1>
+
+    <div class="patient-box">
+
+        <strong>Patient:</strong>
+
+        <span
+            th:text="${patient.patientNumber}">
+        </span>
+
+        -
+
+        <span
+            th:text="${patient.firstName}">
+        </span>
+
+        <span
+            th:text="${patient.lastName}">
+        </span>
+
+    </div>
+
+    <form
+        th:action="@{/doctor/medical-records/save}"
+        th:object="${medicalRecord}"
+        method="post">
+
+        <input
+            type="hidden"
+            name="patientId"
+            th:value="${patient.id}">
+
+
+        <label>Visit Date</label>
+
+        <input
+            type="date"
+            th:field="*{visitDate}">
+
+        <div
+            class="error"
+            th:errors="*{visitDate}">
+        </div>
+
+
+        <label>Diagnosis</label>
+
+        <textarea
+            th:field="*{diagnosis}"
+            placeholder="Enter diagnosis">
+        </textarea>
+
+        <div
+            class="error"
+            th:errors="*{diagnosis}">
+        </div>
+
+
+        <label>Treatment</label>
+
+        <textarea
+            th:field="*{treatment}"
+            placeholder="Enter treatment plan">
+        </textarea>
+
+
+        <label>Prescription</label>
+
+        <textarea
+            th:field="*{prescription}"
+            placeholder="Example: Paracetamol 500mg twice daily">
+        </textarea>
+
+
+        <label>Medical Report Summary</label>
+
+        <textarea
+            th:field="*{reportSummary}"
+            placeholder="Summary of findings / reports">
+        </textarea>
+
+
+        <label>Clinical Notes</label>
+
+        <textarea
+            th:field="*{clinicalNotes}"
+            placeholder="Additional clinical notes">
+        </textarea>
+
+
+        <button type="submit">
+            Save Medical Record
+        </button>
+
+    </form>
+
+    <br>
+
+    <a
+        th:href="@{/doctor/medical-records/patient/{id}(id=${patient.id})}">
+
+        ← Patient History
+
+    </a>
+
+</div>
+
+</body>
+
+</html>
+

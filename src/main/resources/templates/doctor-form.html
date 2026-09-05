@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Doctor</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${doctor.id == null
+        ? 'Add Doctor'
+        : 'Edit Doctor'}">
+    </h1>
+
+    <form
+        th:action="@{/admin/doctors/save}"
+        th:object="${doctor}"
+        method="post">
+
+        <input
+            type="hidden"
+            th:field="*{id}">
+
+        <label>First Name</label>
+
+        <input
+            type="text"
+            th:field="*{firstName}">
+
+        <div
+            class="error"
+            th:errors="*{firstName}">
+        </div>
+
+
+        <label>Last Name</label>
+
+        <input
+            type="text"
+            th:field="*{lastName}">
+
+        <div
+            class="error"
+            th:errors="*{lastName}">
+        </div>
+
+
+        <label>Specialization</label>
+
+        <input
+            type="text"
+            th:field="*{specialization}"
+            placeholder="Example: Cardiologist">
+
+        <div
+            class="error"
+            th:errors="*{specialization}">
+        </div>
+
+
+        <label>Department</label>
+
+        <select
+            name="departmentId"
+            required>
+
+            <option value="">
+                Select Department
+            </option>
+
+            <option
+                th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="${department.name}"
+                th:selected="${doctor.department != null
+                    and doctor.department.id == department.id}">
+            </option>
+
+        </select>
+
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            th:field="*{phone}">
+
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            th:field="*{email}">
+
+        <div
+            class="error"
+            th:errors="*{email}">
+        </div>
+
+
+        <label>Available Day</label>
+
+        <select th:field="*{availableDay}">
+
+            <option value="">
+                Select Day
+            </option>
+
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+
+        </select>
+
+
+        <label>Available From</label>
+
+        <input
+            type="time"
+            th:field="*{availableFrom}">
+
+
+        <label>Available To</label>
+
+        <input
+            type="time"
+            th:field="*{availableTo}">
+
+
+        <button type="submit">
+            Save Doctor
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/admin/doctors">
+        ← Back
+    </a>
+
+</div>
+
+</body>
+
+</html>

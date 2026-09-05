@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Department</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef3f7;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${department.id == null
+        ? 'Add Department'
+        : 'Edit Department'}">
+    </h1>
+
+    <form
+        th:action="@{/admin/departments/save}"
+        th:object="${department}"
+        method="post">
+
+        <input
+            type="hidden"
+            th:field="*{id}">
+
+        <label>Department Name</label>
+
+        <input
+            type="text"
+            th:field="*{name}">
+
+        <div
+            class="error"
+            th:errors="*{name}">
+        </div>
+
+        <label>Description</label>
+
+        <textarea
+            th:field="*{description}">
+        </textarea>
+
+        <button type="submit">
+            Save Department
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/admin/departments">
+        ← Back
+    </a>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Laboratory Dashboard</title>
+
+</head>
+
+<body>
+
+<h1>Laboratory Staff Dashboard</h1>
+
+<p>
+    Welcome Laboratory Staff
+</p>
+
+<h3>Laboratory Functions</h3>
+
+<p>
+    <a href="/lab/lab-tests">
+        Laboratory Test Requests
+    </a>
+</p>
+
+<form th:action="@{/logout}" method="post">
+
+    <button type="submit">
+        Logout
+    </button>
+
+</form>
+
+</body>
+
+</html>

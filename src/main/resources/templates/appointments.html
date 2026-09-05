@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Appointments</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef3f7;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .primary {
+            background: #1565c0;
+            color: white;
+        }
+
+        .edit {
+            background: #f9a825;
+            color: white;
+        }
+
+        .cancel {
+            background: #c62828;
+            color: white;
+        }
+
+        .complete {
+            background: #2e7d32;
+            color: white;
+        }
+
+        form.inline {
+            display: inline;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+
+        <h1>Appointment Management</h1>
+
+        <a
+            href="/appointments/new"
+            class="btn primary">
+
+            + Book Appointment
+
+        </a>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="appointment : ${appointments}">
+
+            <td th:text="${appointment.id}">
+            </td>
+
+            <td>
+
+                <strong
+                    th:text="${appointment.patient.patientNumber}">
+                </strong>
+
+                <br>
+
+                <span
+                    th:text="${appointment.patient.firstName}">
+                </span>
+
+                <span
+                    th:text="${appointment.patient.lastName}">
+                </span>
+
+            </td>
+
+            <td>
+
+                Dr.
+
+                <span
+                    th:text="${appointment.doctor.firstName}">
+                </span>
+
+                <span
+                    th:text="${appointment.doctor.lastName}">
+                </span>
+
+            </td>
+
+            <td
+                th:text="${appointment.doctor.department.name}">
+            </td>
+
+            <td
+                th:text="${appointment.appointmentDate}">
+            </td>
+
+            <td
+                th:text="${appointment.appointmentTime}">
+            </td>
+
+            <td
+                th:text="${appointment.reason}">
+            </td>
+
+            <td>
+                <strong
+                    th:text="${appointment.status}">
+                </strong>
+            </td>
+
+            <td>
+
+                <a
+                    th:if="${appointment.status.name() == 'SCHEDULED'}"
+                    th:href="@{/appointments/{id}/edit(id=${appointment.id})}"
+                    class="btn edit">
+
+                    Reschedule
+
+                </a>
+
+                <form
+                    th:if="${appointment.status.name() == 'SCHEDULED'}"
+                    th:action="@{/appointments/{id}/complete(id=${appointment.id})}"
+                    method="post"
+                    class="inline">
+
+                    <button
+                        type="submit"
+                        class="btn complete">
+
+                        Complete
+
+                    </button>
+
+                </form>
+
+                <form
+                    th:if="${appointment.status.name() == 'SCHEDULED'}"
+                    th:action="@{/appointments/{id}/cancel(id=${appointment.id})}"
+                    method="post"
+                    class="inline">
+
+                    <button
+                        type="submit"
+                        class="btn cancel"
+                        onclick="return confirm('Cancel this appointment?')">
+
+                        Cancel
+
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="/dashboard">
+        ← Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>

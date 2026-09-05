@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Laboratory Requests</title>
+
+</head>
+
+<body>
+
+<h1>Laboratory Test Requests</h1>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Test</th>
+        <th>Sample</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="test : ${tests}">
+
+        <td
+            th:text="${test.id}">
+        </td>
+
+        <td>
+
+            <span
+                th:text="${test.patient.patientNumber}">
+            </span>
+
+            -
+
+            <span
+                th:text="${test.patient.firstName}">
+            </span>
+
+            <span
+                th:text="${test.patient.lastName}">
+            </span>
+
+        </td>
+
+        <td
+            th:text="${test.testName}">
+        </td>
+
+        <td
+            th:text="${test.sampleType}">
+        </td>
+
+        <td
+            th:text="${test.status}">
+        </td>
+
+        <td>
+
+            <form
+                th:if="${test.status.name() == 'REQUESTED'}"
+                th:action="@{/lab/lab-tests/{id}/collect(id=${test.id})}"
+                method="post">
+
+                <button type="submit">
+                    Mark Sample Collected
+                </button>
+
+            </form>
+
+
+            <a
+                th:if="${test.status.name() == 'SAMPLE_COLLECTED'}"
+                th:href="@{/lab/lab-tests/{id}/result(id=${test.id})}">
+
+                Enter Result
+
+            </a>
+
+
+            <a
+                th:if="${test.status.name() == 'COMPLETED'}"
+                th:href="@{/lab/lab-tests/{id}/report(id=${test.id})}">
+
+                View Report
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="/lab/dashboard">
+    ← Lab Dashboard
+</a>
+
+</body>
+
+</html>
