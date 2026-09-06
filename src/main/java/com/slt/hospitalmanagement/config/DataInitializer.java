@@ -34,6 +34,7 @@ public class DataInitializer implements CommandLineRunner {
         Role receptionistRole = createRole("RECEPTIONIST");
         Role labStaffRole = createRole("LAB_STAFF");
         Role pharmacistRole = createRole("PHARMACIST");
+        Role accountantRole = createRole("ACCOUNTANT");
 
         createRole("NURSE");
         createRole("LAB_STAFF");
@@ -67,6 +68,11 @@ public class DataInitializer implements CommandLineRunner {
         "Pharmacy@123",
         pharmacistRole
         );
+        createUser(
+        "accountant",
+        "Account@123",
+        accountantRole
+);
 
     }
 

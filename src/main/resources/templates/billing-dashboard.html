@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Dashboard</title>
+</head>
+
+<body>
+
+<h1>Billing & Payments</h1>
+
+<p>
+    <a href="/billing/new">
+        + Generate New Invoice
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+    <tr>
+        <th>Invoice</th>
+        <th>Patient</th>
+        <th>Total</th>
+        <th>Paid</th>
+        <th>Balance</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="bill : ${bills}">
+
+        <td th:text="${bill.invoiceNumber}"></td>
+
+        <td>
+            <span th:text="${bill.patient.firstName}"></span>
+            <span th:text="${bill.patient.lastName}"></span>
+        </td>
+
+        <td th:text="${bill.totalAmount}"></td>
+
+        <td th:text="${bill.paidAmount}"></td>
+
+        <td th:text="${bill.balanceAmount}"></td>
+
+        <td th:text="${bill.status}"></td>
+
+        <td>
+            <a
+                th:href="@{/billing/{id}(id=${bill.id})}">
+                View Invoice
+            </a>
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">
+        Logout
+    </button>
+</form>
+
+</body>
+</html>
