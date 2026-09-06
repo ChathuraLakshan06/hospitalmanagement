@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Management</title>
+</head>
+
+<body>
+
+<h1>Staff Management</h1>
+
+<form
+    th:action="@{/admin/staff}"
+    method="get">
+
+    <input
+        type="text"
+        name="keyword"
+        th:value="${keyword}"
+        placeholder="Search staff">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+<a href="/admin/staff/new">
+    + Register Employee
+</a>
+
+&nbsp;
+
+<a href="/admin/staff/attendance">
+    Attendance
+</a>
+
+&nbsp;
+
+<a href="/admin/staff/leaves">
+    Leave Records
+</a>
+
+<br><br>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+    <tr>
+        <th>Employee No</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Department</th>
+        <th>Phone</th>
+        <th>Join Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="employee : ${employees}">
+
+        <td th:text="${employee.employeeNumber}">
+        </td>
+
+        <td>
+            <span th:text="${employee.firstName}">
+            </span>
+
+            <span th:text="${employee.lastName}">
+            </span>
+        </td>
+
+        <td th:text="${employee.position}">
+        </td>
+
+        <td th:text="${employee.department.name}">
+        </td>
+
+        <td th:text="${employee.phone}">
+        </td>
+
+        <td th:text="${employee.joinDate}">
+        </td>
+
+        <td th:text="${employee.status}">
+        </td>
+
+        <td>
+            <a
+                th:href="@{/admin/staff/{id}/edit(id=${employee.id})}">
+                Edit
+            </a>
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="/admin/dashboard">
+    ← Admin Dashboard
+</a>
+
+</body>
+
+</html>

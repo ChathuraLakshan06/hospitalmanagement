@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leave Records</title>
+</head>
+
+<body>
+
+<h1>Leave Records</h1>
+
+<p
+    th:if="${error}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+
+<h3>Add Leave Request</h3>
+
+<form
+    th:action="@{/admin/staff/leaves/save}"
+    method="post">
+
+    <label>Employee</label>
+
+    <select
+        name="employeeId"
+        required>
+
+        <option value="">
+            Select Employee
+        </option>
+
+        <option
+            th:each="employee : ${employees}"
+            th:value="${employee.id}"
+            th:text="${employee.employeeNumber
+                + ' - '
+                + employee.firstName
+                + ' '
+                + employee.lastName}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Leave Type</label>
+
+    <select
+        name="leaveType"
+        required>
+
+        <option value="ANNUAL">
+            Annual Leave
+        </option>
+
+        <option value="CASUAL">
+            Casual Leave
+        </option>
+
+        <option value="MEDICAL">
+            Medical Leave
+        </option>
+
+        <option value="OTHER">
+            Other
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Start Date</label>
+
+    <input
+        type="date"
+        name="startDate"
+        required>
+
+    <br><br>
+
+    <label>End Date</label>
+
+    <input
+        type="date"
+        name="endDate"
+        required>
+
+    <br><br>
+
+    <label>Reason</label>
+
+    <textarea
+        name="reason"
+        rows="4"
+        cols="50">
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Add Leave Request
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Leave History</h2>
+
+<table border="1" cellpadding="8">
+
+    <tr>
+        <th>Employee</th>
+        <th>Type</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Reviewed By</th>
+        <th>Action</th>
+    </tr>
+
+    <tr
+        th:each="leave : ${leaveRecords}">
+
+        <td>
+            <span
+                th:text="${leave.employee.employeeNumber}">
+            </span>
+
+            -
+
+            <span
+                th:text="${leave.employee.firstName}">
+            </span>
+
+            <span
+                th:text="${leave.employee.lastName}">
+            </span>
+        </td>
+
+        <td
+            th:text="${leave.leaveType}">
+        </td>
+
+        <td
+            th:text="${leave.startDate}">
+        </td>
+
+        <td
+            th:text="${leave.endDate}">
+        </td>
+
+        <td
+            th:text="${leave.reason}">
+        </td>
+
+        <td
+            th:text="${leave.status}">
+        </td>
+
+        <td
+            th:text="${leave.reviewedBy}">
+        </td>
+
+        <td>
+
+            <div
+                th:if="${leave.status.name() == 'PENDING'}">
+
+                <form
+                    th:action="@{/admin/staff/leaves/{id}/approve(id=${leave.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                    <button type="submit">
+                        Approve
+                    </button>
+
+                </form>
+
+                <form
+                    th:action="@{/admin/staff/leaves/{id}/reject(id=${leave.id})}"
+                    method="post"
+                    style="display:inline;">
+
+                    <button type="submit">
+                        Reject
+                    </button>
+
+                </form>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+</table>
+
+<br>
+
+<a href="/admin/staff">
+    ← Staff Management
+</a>
+
+</body>
+
+</html>
