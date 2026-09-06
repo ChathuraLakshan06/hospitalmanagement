@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice</title>
+</head>
+
+<body>
+
+<h1>Hospital Invoice</h1>
+
+<p>
+    <strong>Invoice:</strong>
+    <span th:text="${bill.invoiceNumber}"></span>
+</p>
+
+<p>
+    <strong>Patient:</strong>
+
+    <span th:text="${bill.patient.patientNumber}"></span>
+
+    -
+
+    <span th:text="${bill.patient.firstName}"></span>
+
+    <span th:text="${bill.patient.lastName}"></span>
+</p>
+
+<hr>
+
+<p>
+    Consultation:
+    Rs.
+    <span th:text="${bill.consultationCharge}"></span>
+</p>
+
+<p>
+    Laboratory:
+    Rs.
+    <span th:text="${bill.laboratoryCharge}"></span>
+</p>
+
+<p>
+    Pharmacy:
+    Rs.
+    <span th:text="${bill.pharmacyCharge}"></span>
+</p>
+
+<p>
+    Admission:
+    Rs.
+    <span th:text="${bill.admissionCharge}"></span>
+</p>
+
+<p>
+    Other:
+    Rs.
+    <span th:text="${bill.otherCharge}"></span>
+</p>
+
+<hr>
+
+<h3>
+    Total:
+    Rs.
+    <span th:text="${bill.totalAmount}"></span>
+</h3>
+
+<p>
+    Paid:
+    Rs.
+    <span th:text="${bill.paidAmount}"></span>
+</p>
+
+<p>
+    Balance:
+    Rs.
+    <span th:text="${bill.balanceAmount}"></span>
+</p>
+
+<p>
+    Status:
+    <strong th:text="${bill.status}"></strong>
+</p>
+
+<button onclick="window.print()">
+    Print Invoice
+</button>
+
+<hr>
+
+<p
+    th:if="${error}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+
+<div th:if="${bill.status.name() != 'PAID'}">
+
+    <h2>Record Payment</h2>
+
+    <form
+        th:action="@{/billing/{id}/payment(id=${bill.id})}"
+        method="post">
+
+        <label>Amount</label>
+
+        <input
+            type="number"
+            name="amount"
+            step="0.01"
+            min="0.01"
+            required>
+
+        <br><br>
+
+        <label>Payment Method</label>
+
+        <select
+            name="paymentMethod"
+            required>
+
+            <option value="CASH">
+                Cash
+            </option>
+
+            <option value="CARD">
+                Card
+            </option>
+
+            <option value="BANK_TRANSFER">
+                Bank Transfer
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <label>Reference Number</label>
+
+        <input
+            type="text"
+            name="referenceNumber">
+
+        <br><br>
+
+        <label>Notes</label>
+
+        <textarea
+            name="notes">
+        </textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Record Payment
+        </button>
+
+    </form>
+
+</div>
+
+<hr>
+
+<h2>Payment History</h2>
+
+<table border="1" cellpadding="8">
+
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Method</th>
+        <th>Received By</th>
+    </tr>
+
+    <tr th:each="payment : ${payments}">
+
+        <td th:text="${payment.paymentDate}"></td>
+
+        <td th:text="${payment.amount}"></td>
+
+        <td th:text="${payment.paymentMethod}"></td>
+
+        <td th:text="${payment.receivedBy}"></td>
+
+    </tr>
+
+</table>
+
+<br>
+
+<a href="/billing/dashboard">
+    ← Billing Dashboard
+</a>
+
+</body>
+</html>

@@ -49,6 +49,9 @@ public class SecurityConfig {
 
                 .requestMatchers("/pharmacy/**")
                 .hasAnyRole("PHARMACIST","ADMIN")
+
+                .requestMatchers("/billing/**")
+                .hasAnyRole("ACCOUNTANT","ADMIN")
     
 
                 .anyRequest()
