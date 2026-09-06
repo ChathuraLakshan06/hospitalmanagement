@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pharmacy Dashboard</title>
+</head>
+
+<body>
+
+<h1>Pharmacy Dashboard</h1>
+
+<p>Welcome Pharmacist</p>
+
+<h3>Alerts</h3>
+
+<p>
+    Low Stock Medicines:
+    <strong th:text="${lowStockCount}"></strong>
+</p>
+
+<p>
+    Expiring Within 30 Days:
+    <strong th:text="${expiringCount}"></strong>
+</p>
+
+<hr>
+
+<p>
+    <a href="/pharmacy/medicines">
+        Medicine Inventory
+    </a>
+</p>
+
+<p>
+    <a href="/pharmacy/prescriptions">
+        Prescription Processing
+    </a>
+</p>
+
+<form th:action="@{/logout}" method="post">
+
+    <button type="submit">
+        Logout
+    </button>
+
+</form>
+
+</body>
+
+</html>

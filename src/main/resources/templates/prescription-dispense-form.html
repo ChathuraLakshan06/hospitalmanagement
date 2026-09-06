@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dispense Prescription</title>
+</head>
+
+<body>
+
+<h1>Process Prescription</h1>
+
+<p>
+    <strong>Patient:</strong>
+
+    <span
+        th:text="${order.medicalRecord.patient.firstName}">
+    </span>
+
+    <span
+        th:text="${order.medicalRecord.patient.lastName}">
+    </span>
+</p>
+
+<p>
+    <strong>Prescription:</strong>
+
+    <span
+        th:text="${order.medicalRecord.prescription}">
+    </span>
+</p>
+
+<form
+    th:action="@{/pharmacy/prescriptions/{id}/dispense(id=${order.id})}"
+    method="post">
+
+    <label>Pharmacy Notes</label>
+
+    <br>
+
+    <textarea
+        name="notes"
+        rows="5"
+        cols="60">
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Mark as Dispensed
+    </button>
+
+</form>
+
+</body>
+
+</html>

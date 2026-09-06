@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prescriptions</title>
+</head>
+
+<body>
+
+<h1>Prescription Processing</h1>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+
+    <tr>
+        <th>Patient</th>
+        <th>Visit Date</th>
+        <th>Prescription</th>
+        <th>Doctor</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="order : ${orders}">
+
+        <td>
+
+            <span
+                th:text="${order.medicalRecord.patient.patientNumber}">
+            </span>
+
+            -
+
+            <span
+                th:text="${order.medicalRecord.patient.firstName}">
+            </span>
+
+            <span
+                th:text="${order.medicalRecord.patient.lastName}">
+            </span>
+
+        </td>
+
+        <td
+            th:text="${order.medicalRecord.visitDate}">
+        </td>
+
+        <td
+            th:text="${order.medicalRecord.prescription}">
+        </td>
+
+        <td
+            th:text="${order.medicalRecord.recordedBy}">
+        </td>
+
+        <td
+            th:text="${order.status}">
+        </td>
+
+        <td>
+
+            <a
+                th:if="${order.status.name() == 'PENDING'}"
+                th:href="@{/pharmacy/prescriptions/{id}/dispense(id=${order.id})}">
+
+                Process
+
+            </a>
+
+            <span
+                th:if="${order.status.name() == 'DISPENSED'}">
+
+                Dispensed by
+
+                <strong
+                    th:text="${order.dispensedBy}">
+                </strong>
+
+            </span>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="/pharmacy/dashboard">
+    ← Pharmacy Dashboard
+</a>
+
+</body>
+
+</html>

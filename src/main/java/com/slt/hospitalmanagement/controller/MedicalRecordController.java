@@ -17,6 +17,7 @@ import com.slt.hospitalmanagement.entity.MedicalRecord;
 import com.slt.hospitalmanagement.entity.Patient;
 import com.slt.hospitalmanagement.service.MedicalRecordService;
 import com.slt.hospitalmanagement.service.PatientService;
+import com.slt.hospitalmanagement.service.PrescriptionOrderService;
 
 import jakarta.validation.Valid;
 
@@ -26,16 +27,16 @@ public class MedicalRecordController {
 
     private final MedicalRecordService medicalRecordService;
     private final PatientService patientService;
+    private final PrescriptionOrderService prescriptionOrderService;
 
     public MedicalRecordController(
             MedicalRecordService medicalRecordService,
-            PatientService patientService) {
+            PatientService patientService,
+            PrescriptionOrderService prescriptionOrderService) {
 
-        this.medicalRecordService =
-                medicalRecordService;
-
-        this.patientService =
-                patientService;
+        this.medicalRecordService = medicalRecordService;
+        this.patientService = patientService;
+        this.prescriptionOrderService = prescriptionOrderService;
     }
 
     @GetMapping
@@ -55,8 +56,7 @@ public class MedicalRecordController {
             Model model) {
 
         Patient patient =
-                patientService
-                    .getPatientById(patientId);
+                patientService.getPatientById(patientId);
 
         model.addAttribute(
                 "patient",
@@ -66,7 +66,7 @@ public class MedicalRecordController {
         model.addAttribute(
                 "records",
                 medicalRecordService
-                    .getRecordsByPatient(patientId)
+                        .getRecordsByPatient(patientId)
         );
 
         return "medical-history";
@@ -78,14 +78,14 @@ public class MedicalRecordController {
             Model model) {
 
         Patient patient =
-                patientService
-                    .getPatientById(patientId);
+                patientService.getPatientById(patientId);
 
         MedicalRecord record =
                 new MedicalRecord();
 
         record.setVisitDate(
-                LocalDate.now());
+                LocalDate.now()
+        );
 
         model.addAttribute(
                 "medicalRecord",
@@ -102,7 +102,6 @@ public class MedicalRecordController {
 
     @PostMapping("/save")
     public String saveRecord(
-
             @Valid
             @ModelAttribute("medicalRecord")
             MedicalRecord medicalRecord,
@@ -116,8 +115,7 @@ public class MedicalRecordController {
             Model model) {
 
         Patient patient =
-                patientService
-                    .getPatientById(patientId);
+                patientService.getPatientById(patientId);
 
         if (result.hasErrors()) {
 
@@ -135,8 +133,12 @@ public class MedicalRecordController {
                 authentication.getName()
         );
 
-        medicalRecordService
-                .saveRecord(medicalRecord);
+        MedicalRecord savedRecord =
+                medicalRecordService
+                        .saveRecord(medicalRecord);
+
+        prescriptionOrderService
+                .createIfNeeded(savedRecord);
 
         return "redirect:/doctor/medical-records/patient/"
                 + patientId;
