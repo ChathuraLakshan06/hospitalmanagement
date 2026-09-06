@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+
+<body>
+
+<h1
+    th:text="${employee.id == null
+        ? 'Register Employee'
+        : 'Update Employee'}">
+</h1>
+
+<form
+    th:action="@{/admin/staff/save}"
+    th:object="${employee}"
+    method="post">
+
+    <input
+        type="hidden"
+        th:field="*{id}">
+
+    <label>First Name</label>
+
+    <input
+        type="text"
+        th:field="*{firstName}"
+        required>
+
+    <br><br>
+
+    <label>Last Name</label>
+
+    <input
+        type="text"
+        th:field="*{lastName}"
+        required>
+
+    <br><br>
+
+    <label>Email</label>
+
+    <input
+        type="email"
+        th:field="*{email}">
+
+    <br><br>
+
+    <label>Phone</label>
+
+    <input
+        type="text"
+        th:field="*{phone}">
+
+    <br><br>
+
+    <label>Position</label>
+
+    <select
+        th:field="*{position}"
+        required>
+
+        <option value="">
+            Select Position
+        </option>
+
+        <option value="Nurse">
+            Nurse
+        </option>
+
+        <option value="Receptionist">
+            Receptionist
+        </option>
+
+        <option value="Laboratory Staff">
+            Laboratory Staff
+        </option>
+
+        <option value="Pharmacist">
+            Pharmacist
+        </option>
+
+        <option value="Accountant">
+            Accountant
+        </option>
+
+        <option value="Administrator">
+            Administrator
+        </option>
+
+        <option value="Other">
+            Other
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Department</label>
+
+    <select
+        name="departmentId"
+        required>
+
+        <option value="">
+            Select Department
+        </option>
+
+        <option
+            th:each="department : ${departments}"
+            th:value="${department.id}"
+            th:text="${department.name}"
+            th:selected="${employee.department != null
+                && employee.department.id == department.id}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Join Date</label>
+
+    <input
+        type="date"
+        th:field="*{joinDate}"
+        required>
+
+    <br><br>
+
+    <label>Status</label>
+
+    <select th:field="*{status}">
+
+        <option value="ACTIVE">
+            Active
+        </option>
+
+        <option value="INACTIVE">
+            Inactive
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Save Employee
+    </button>
+
+</form>
+
+<br>
+
+<a href="/admin/staff">
+    ← Staff Management
+</a>
+
+</body>
+
+</html>

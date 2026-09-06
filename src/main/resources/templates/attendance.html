@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+</head>
+
+<body>
+
+<h1>Staff Attendance</h1>
+
+<p
+    th:if="${error}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+
+<h3>Record Attendance</h3>
+
+<form
+    th:action="@{/admin/staff/attendance/save}"
+    method="post">
+
+    <label>Employee</label>
+
+    <select name="employeeId" required>
+
+        <option value="">
+            Select Employee
+        </option>
+
+        <option
+            th:each="employee : ${employees}"
+            th:value="${employee.id}"
+            th:text="${employee.employeeNumber
+                + ' - '
+                + employee.firstName
+                + ' '
+                + employee.lastName}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Date</label>
+
+    <input
+        type="date"
+        name="attendanceDate"
+        required>
+
+    <br><br>
+
+    <label>Check In</label>
+
+    <input
+        type="time"
+        name="checkIn">
+
+    <br><br>
+
+    <label>Check Out</label>
+
+    <input
+        type="time"
+        name="checkOut">
+
+    <br><br>
+
+    <label>Status</label>
+
+    <select name="status" required>
+
+        <option value="PRESENT">
+            Present
+        </option>
+
+        <option value="ABSENT">
+            Absent
+        </option>
+
+        <option value="HALF_DAY">
+            Half Day
+        </option>
+
+        <option value="ON_LEAVE">
+            On Leave
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Remarks</label>
+
+    <input
+        type="text"
+        name="remarks">
+
+    <br><br>
+
+    <button type="submit">
+        Record Attendance
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Attendance History</h2>
+
+<table border="1" cellpadding="8">
+
+    <tr>
+        <th>Date</th>
+        <th>Employee</th>
+        <th>Status</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Recorded By</th>
+    </tr>
+
+    <tr
+        th:each="record : ${attendanceRecords}">
+
+        <td
+            th:text="${record.attendanceDate}">
+        </td>
+
+        <td>
+            <span
+                th:text="${record.employee.employeeNumber}">
+            </span>
+
+            -
+
+            <span
+                th:text="${record.employee.firstName}">
+            </span>
+
+            <span
+                th:text="${record.employee.lastName}">
+            </span>
+        </td>
+
+        <td
+            th:text="${record.status}">
+        </td>
+
+        <td
+            th:text="${record.checkIn}">
+        </td>
+
+        <td
+            th:text="${record.checkOut}">
+        </td>
+
+        <td
+            th:text="${record.recordedBy}">
+        </td>
+
+    </tr>
+
+</table>
+
+<br>
+
+<a href="/admin/staff">
+    ← Staff Management
+</a>
+
+</body>
+
+</html>
