@@ -46,6 +46,9 @@ public class SecurityConfig {
                     
                 .requestMatchers("/lab/**")
                 .hasAnyRole("LAB_STAFF","ADMIN")
+
+                .requestMatchers("/pharmacy/**")
+                .hasAnyRole("PHARMACIST","ADMIN")
     
 
                 .anyRequest()

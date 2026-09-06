@@ -42,6 +42,12 @@ public class DashboardController {
                 .anyMatch(a ->
                         a.getAuthority()
                                 .equals("ROLE_LAB_STAFF"));
+        boolean isPharmacist = authentication
+                .getAuthorities()
+                .stream()
+                .anyMatch(a ->
+                        a.getAuthority()
+                                .equals("ROLE_PHARMACIST"));
 
         if (isAdmin) {
             return "redirect:/admin/dashboard";
@@ -57,6 +63,9 @@ public class DashboardController {
 
         if (isLabStaff) {
             return "redirect:/lab/dashboard";
+        }
+        if (isPharmacist) {
+            return "redirect:/pharmacy/dashboard";
         }
 
         return "access-denied";

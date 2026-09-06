@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Medicine Inventory</title>
+
+</head>
+
+<body>
+
+<h1>Medicine Inventory</h1>
+
+<form action="/pharmacy/medicines"
+      method="get">
+
+    <input
+        type="text"
+        name="keyword"
+        th:value="${keyword}"
+        placeholder="Search medicine">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+<a href="/pharmacy/medicines/new">
+    + Add Medicine
+</a>
+
+<br><br>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+
+    <tr>
+        <th>Code</th>
+        <th>Medicine</th>
+        <th>Generic</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Expiry</th>
+        <th>Alerts</th>
+        <th>Actions</th>
+    </tr>
+
+    </thead>
+
+    <tbody>
+
+    <tr th:each="medicine : ${medicines}">
+
+        <td
+            th:text="${medicine.medicineCode}">
+        </td>
+
+        <td
+            th:text="${medicine.name}">
+        </td>
+
+        <td
+            th:text="${medicine.genericName}">
+        </td>
+
+        <td
+            th:text="${medicine.category}">
+        </td>
+
+        <td
+            th:text="${medicine.unitPrice}">
+        </td>
+
+        <td
+            th:text="${medicine.quantityInStock}">
+        </td>
+
+        <td
+            th:text="${medicine.expiryDate}">
+        </td>
+
+        <td>
+
+            <strong
+                th:if="${medicine.expired}">
+                EXPIRED
+            </strong>
+
+            <strong
+                th:if="${medicine.expiringSoon}">
+                EXPIRING SOON
+            </strong>
+
+            <strong
+                th:if="${medicine.lowStock}">
+                LOW STOCK
+            </strong>
+
+        </td>
+
+        <td>
+
+            <a
+                th:href="@{/pharmacy/medicines/{id}/edit(id=${medicine.id})}">
+                Edit
+            </a>
+
+            <form
+                th:action="@{/pharmacy/medicines/{id}/delete(id=${medicine.id})}"
+                method="post"
+                style="display:inline;">
+
+                <button
+                    type="submit"
+                    onclick="return confirm('Delete this medicine?')">
+
+                    Delete
+
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a href="/pharmacy/dashboard">
+    ← Pharmacy Dashboard
+</a>
+
+</body>
+
+</html>

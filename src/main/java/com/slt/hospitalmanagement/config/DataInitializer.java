@@ -33,6 +33,7 @@ public class DataInitializer implements CommandLineRunner {
         Role doctorRole = createRole("DOCTOR");
         Role receptionistRole = createRole("RECEPTIONIST");
         Role labStaffRole = createRole("LAB_STAFF");
+        Role pharmacistRole = createRole("PHARMACIST");
 
         createRole("NURSE");
         createRole("LAB_STAFF");
@@ -57,10 +58,16 @@ public class DataInitializer implements CommandLineRunner {
                 receptionistRole
         );
         createUser(
-        "labstaff",
-        "Lab@123",
-        labStaffRole
-);
+                "labstaff",
+                "Lab@123",
+                labStaffRole
+        );
+        createUser(
+        "pharmacist",
+        "Pharmacy@123",
+        pharmacistRole
+        );
+
     }
 
     private Role createRole(String roleName) {
