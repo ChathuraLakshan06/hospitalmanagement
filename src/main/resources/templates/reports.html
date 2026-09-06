@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Reports & Analytics</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .card .number {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .filter {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow:
+                0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .summary {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom:
+                1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #f0f2f5;
+        }
+
+        button,
+        .button {
+            padding: 9px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #1f4e78;
+            color: white;
+            text-decoration: none;
+        }
+
+        input {
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        .top-actions {
+            margin-bottom: 20px;
+        }
+
+        @media print {
+
+            .no-print {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .section,
+            .card {
+                box-shadow: none;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Reports & Analytics
+    </h1>
+
+    <p class="subtitle">
+        Hospital Management System
+    </p>
+
+
+    <!-- ===================== -->
+    <!-- TOP ACTIONS -->
+    <!-- ===================== -->
+
+    <div class="top-actions no-print">
+
+        <a
+            href="/admin/dashboard"
+            class="button">
+
+            ← Admin Dashboard
+
+        </a>
+
+        <button
+            onclick="window.print()">
+
+            Print Report
+
+        </button>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- KPI CARDS -->
+    <!-- ===================== -->
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>
+                Total Patients
+            </h3>
+
+            <div
+                class="number"
+                th:text="${totalPatients}">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Today's Appointments
+            </h3>
+
+            <div
+                class="number"
+                th:text="${todayAppointments}">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Revenue
+            </h3>
+
+            <div class="number">
+
+                Rs.
+                <span
+                    th:text="${revenue}">
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Pending Lab Requests
+            </h3>
+
+            <div
+                class="number"
+                th:text="${labRequests}">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Low Stock Medicines
+            </h3>
+
+            <div
+                class="number"
+                th:text="${lowStockCount}">
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Active Staff
+            </h3>
+
+            <div
+                class="number"
+                th:text="${activeStaffCount}">
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- DATE FILTER -->
+    <!-- ===================== -->
+
+    <div class="filter no-print">
+
+        <h3>
+            Report Period
+        </h3>
+
+        <form
+            th:action="@{/admin/reports}"
+            method="get">
+
+            <label>
+                From
+            </label>
+
+            <input
+                type="date"
+                name="startDate"
+                th:value="${startDate}">
+
+
+            <label>
+                To
+            </label>
+
+            <input
+                type="date"
+                name="endDate"
+                th:value="${endDate}">
+
+
+            <button type="submit">
+                Apply Filter
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- PATIENT REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Patient Report
+        </h2>
+
+        <p>
+            Total Patients:
+            <strong
+                th:text="${totalPatients}">
+            </strong>
+        </p>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Patient No</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Phone</th>
+                <th>Blood Group</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="patient : ${patients}">
+
+                <td
+                    th:text="${patient.patientNumber}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:text="${patient.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${patient.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${patient.gender}">
+                </td>
+
+                <td
+                    th:text="${patient.dateOfBirth}">
+                </td>
+
+                <td
+                    th:text="${patient.phone}">
+                </td>
+
+                <td
+                    th:text="${patient.bloodGroup}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- APPOINTMENT REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Appointment Report
+        </h2>
+
+        <div class="summary">
+
+            <p>
+                Scheduled:
+                <strong
+                    th:text="${scheduledCount}">
+                </strong>
+            </p>
+
+            <p>
+                Completed:
+                <strong
+                    th:text="${completedCount}">
+                </strong>
+            </p>
+
+            <p>
+                Cancelled:
+                <strong
+                    th:text="${cancelledCount}">
+                </strong>
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Reason</th>
+                <th>Status</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="appointment : ${appointments}">
+
+                <td
+                    th:text="${appointment.appointmentDate}">
+                </td>
+
+                <td
+                    th:text="${appointment.appointmentTime}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:text="${appointment.patient.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${appointment.patient.lastName}">
+                    </span>
+
+                </td>
+
+                <td>
+
+                    Dr.
+
+                    <span
+                        th:text="${appointment.doctor.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${appointment.doctor.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${appointment.reason}">
+                </td>
+
+                <td
+                    th:text="${appointment.status}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- REVENUE REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Revenue Report
+        </h2>
+
+        <div class="summary">
+
+            <p>
+                Revenue Received:
+
+                <strong>
+                    Rs.
+                    <span
+                        th:text="${revenue}">
+                    </span>
+                </strong>
+            </p>
+
+            <p>
+                Outstanding Balance:
+
+                <strong>
+                    Rs.
+                    <span
+                        th:text="${outstandingBalance}">
+                    </span>
+                </strong>
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Date</th>
+                <th>Invoice</th>
+                <th>Patient</th>
+                <th>Method</th>
+                <th>Amount</th>
+                <th>Received By</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="payment : ${payments}">
+
+                <td
+                    th:text="${payment.paymentDate}">
+                </td>
+
+                <td
+                    th:text="${payment.bill.invoiceNumber}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:text="${payment.bill.patient.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${payment.bill.patient.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${payment.paymentMethod}">
+                </td>
+
+                <td
+                    th:text="${payment.amount}">
+                </td>
+
+                <td
+                    th:text="${payment.receivedBy}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- PHARMACY REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Pharmacy Report
+        </h2>
+
+        <div class="summary">
+
+            <p>
+                Low Stock:
+                <strong
+                    th:text="${lowStockCount}">
+                </strong>
+            </p>
+
+            <p>
+                Expiring Soon:
+                <strong
+                    th:text="${expiringCount}">
+                </strong>
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Code</th>
+                <th>Medicine</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Reorder Level</th>
+                <th>Expiry</th>
+                <th>Alert</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="medicine : ${medicines}">
+
+                <td
+                    th:text="${medicine.medicineCode}">
+                </td>
+
+                <td
+                    th:text="${medicine.name}">
+                </td>
+
+                <td
+                    th:text="${medicine.category}">
+                </td>
+
+                <td
+                    th:text="${medicine.quantityInStock}">
+                </td>
+
+                <td
+                    th:text="${medicine.reorderLevel}">
+                </td>
+
+                <td
+                    th:text="${medicine.expiryDate}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:if="${medicine.expired}">
+                        EXPIRED
+                    </span>
+
+                    <span
+                        th:if="${medicine.lowStock}">
+                        LOW STOCK
+                    </span>
+
+                    <span
+                        th:if="${medicine.expiringSoon}">
+                        EXPIRING SOON
+                    </span>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- LABORATORY REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Laboratory Report
+        </h2>
+
+        <div class="summary">
+
+            <p>
+                Requested:
+                <strong
+                    th:text="${requestedLabCount}">
+                </strong>
+            </p>
+
+            <p>
+                Samples Collected:
+                <strong
+                    th:text="${sampleCollectedCount}">
+                </strong>
+            </p>
+
+            <p>
+                Completed:
+                <strong
+                    th:text="${completedLabCount}">
+                </strong>
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Patient</th>
+                <th>Test</th>
+                <th>Sample Type</th>
+                <th>Status</th>
+                <th>Requested By</th>
+                <th>Requested At</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="test : ${labTests}">
+
+                <td>
+
+                    <span
+                        th:text="${test.patient.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${test.patient.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${test.testName}">
+                </td>
+
+                <td
+                    th:text="${test.sampleType}">
+                </td>
+
+                <td
+                    th:text="${test.status}">
+                </td>
+
+                <td
+                    th:text="${test.requestedBy}">
+                </td>
+
+                <td
+                    th:text="${test.requestedAt}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ===================== -->
+    <!-- STAFF REPORT -->
+    <!-- ===================== -->
+
+    <div class="section">
+
+        <h2>
+            Staff Report
+        </h2>
+
+        <div class="summary">
+
+            <p>
+                Active Staff:
+                <strong
+                    th:text="${activeStaffCount}">
+                </strong>
+            </p>
+
+            <p>
+                Pending Leave Requests:
+                <strong
+                    th:text="${pendingLeaveCount}">
+                </strong>
+            </p>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Employee No</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Department</th>
+                <th>Join Date</th>
+                <th>Status</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="employee : ${employees}">
+
+                <td
+                    th:text="${employee.employeeNumber}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:text="${employee.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${employee.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${employee.position}">
+                </td>
+
+                <td
+                    th:text="${employee.department.name}">
+                </td>
+
+                <td
+                    th:text="${employee.joinDate}">
+                </td>
+
+                <td
+                    th:text="${employee.status}">
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
