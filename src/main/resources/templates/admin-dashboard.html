@@ -8,6 +8,19 @@
 </head>
 
 <body>
+    <h1>Admin Dashboard</h1>
+
+<p>Welcome Administrator</p>
+
+<h3>Administrator Functions</h3>
+
+<ul>
+    <li>User Management</li>
+    <li>Doctor Management</li>
+    <li>Patient Management</li>
+    <li>Appointments</li>
+    <li>Reports</li>
+</ul>
 <h3>Management</h3>
 
 <p>
@@ -18,6 +31,11 @@
 <p>
     <a href="/admin/staff">
         Staff Management
+    </a>
+</p>
+<p>
+    <a href="/admissions">
+        Inpatient Admissions
     </a>
 </p>
 
@@ -41,19 +59,11 @@
         Doctor Management
     </a>
 </p>
-<h1>Admin Dashboard</h1>
-
-<p>Welcome Administrator</p>
-
-<h3>Administrator Functions</h3>
-
-<ul>
-    <li>User Management</li>
-    <li>Doctor Management</li>
-    <li>Patient Management</li>
-    <li>Appointments</li>
-    <li>Reports</li>
-</ul>
+<p>
+    <a href="/change-password">
+        Change Password
+    </a>
+</p>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
