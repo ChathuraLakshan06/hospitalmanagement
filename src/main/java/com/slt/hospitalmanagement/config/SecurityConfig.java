@@ -52,6 +52,9 @@ public class SecurityConfig {
 
                 .requestMatchers("/billing/**")
                 .hasAnyRole("ACCOUNTANT","ADMIN")
+
+                .requestMatchers("/admissions/**")
+                .hasAnyRole("RECEPTIONIST","ADMIN")
     
 
                 .anyRequest()

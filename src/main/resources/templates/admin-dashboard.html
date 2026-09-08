@@ -5,8 +5,16 @@
 </a>
 <head>
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
+<body class="dashboard-page dashboard-admin">
+    <div class="dashboard-hero" aria-hidden="true">
+        <div class="dashboard-hero-image"></div>
+        <div class="dashboard-hero-shade"></div>
+        <span class="dashboard-hero-label">Care operations</span>
+    </div>
+    <h1>Admin Dashboard</h1>
 <body>
 <h3>Management</h3>
 
@@ -49,15 +57,18 @@
 
 <p>Welcome Administrator</p>
 
-<h3>Administrator Functions</h3>
+<h3>Management</h3>
 
-<ul>
-    <li>User Management</li>
-    <li>Doctor Management</li>
-    <li>Patient Management</li>
-    <li>Appointments</li>
-    <li>Reports</li>
-</ul>
+<div class="dashboard-actions">
+    <a href="/patients" class="dashboard-action">Patient Management <span>→</span></a>
+    <a href="/admin/staff" class="dashboard-action">Staff Management <span>→</span></a>
+    <a href="/admissions" class="dashboard-action">Inpatient Admissions <span>→</span></a>
+    <a href="/admin/departments" class="dashboard-action">Department Management <span>→</span></a>
+    <a href="/appointments" class="dashboard-action">Appointment Management <span>→</span></a>
+    <a href="/doctor/medical-records" class="dashboard-action">Medical Records <span>→</span></a>
+    <a href="/admin/doctors" class="dashboard-action">Doctor Management <span>→</span></a>
+    <a href="/change-password" class="dashboard-action">Change Password <span>→</span></a>
+</div>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>

@@ -2,31 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Doctor Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
-<body>
+<body class="dashboard-page dashboard-doctor">
+<div class="dashboard-hero" aria-hidden="true">
+    <div class="dashboard-hero-image"></div>
+    <div class="dashboard-hero-shade"></div>
+    <span class="dashboard-hero-label">Clinical workspace</span>
+</div>
 
 <h1>Doctor Dashboard</h1>
 
 <p>Welcome Doctor</p>
-<p>
-    <a href="/doctor/medical-records">
-        Electronic Medical Records
-    </a>
-</p>
-<p>
-    <a href="/doctor/lab-tests">
-        Laboratory Tests
-    </a>
-</p>
-
-<ul>
-    <li>View Patients</li>
-    <li>View Appointments</li>
-    <li>Medical Records</li>
-    <li>Diagnosis</li>
-    <li>Prescriptions</li>
-</ul>
+<h3>Clinical tools</h3>
+<div class="dashboard-actions">
+    <a href="/doctor/medical-records" class="dashboard-action">Electronic Medical Records <span>→</span></a>
+    <a href="/doctor/lab-tests" class="dashboard-action">Laboratory Tests <span>→</span></a>
+    <a href="/change-password" class="dashboard-action">Change Password <span>→</span></a>
+</div>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>

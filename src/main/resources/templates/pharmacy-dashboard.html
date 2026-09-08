@@ -5,9 +5,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Pharmacy Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
-<body>
+<body class="dashboard-page dashboard-pharmacy">
+<div class="dashboard-hero" aria-hidden="true">
+    <div class="dashboard-hero-image"></div>
+    <div class="dashboard-hero-shade"></div>
+    <span class="dashboard-hero-label">Medication care</span>
+</div>
 
 <h1>Pharmacy Dashboard</h1>
 
@@ -24,20 +30,12 @@
     Expiring Within 30 Days:
     <strong th:text="${expiringCount}"></strong>
 </p>
-
-<hr>
-
-<p>
-    <a href="/pharmacy/medicines">
-        Medicine Inventory
-    </a>
-</p>
-
-<p>
-    <a href="/pharmacy/prescriptions">
-        Prescription Processing
-    </a>
-</p>
+<h3>Pharmacy workspace</h3>
+<div class="dashboard-actions">
+    <a href="/pharmacy/medicines" class="dashboard-action">Medicine Inventory <span>→</span></a>
+    <a href="/pharmacy/prescriptions" class="dashboard-action">Prescription Processing <span>→</span></a>
+    <a href="/change-password" class="dashboard-action">Change Password <span>→</span></a>
+</div>
 
 <form th:action="@{/logout}" method="post">
 

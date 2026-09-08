@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admission Details</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<h1>Admission Details</h1>
+
+<p>
+    <strong>Admission Number:</strong>
+
+    <span
+        th:text="${admission.admissionNumber}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Patient:</strong>
+
+    <span
+        th:text="${admission.patient.patientNumber}">
+    </span>
+
+    -
+
+    <span
+        th:text="${admission.patient.firstName}">
+    </span>
+
+    <span
+        th:text="${admission.patient.lastName}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Responsible Doctor:</strong>
+
+    Dr.
+
+    <span
+        th:text="${admission.doctor.firstName}">
+    </span>
+
+    <span
+        th:text="${admission.doctor.lastName}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Admission Date:</strong>
+
+    <span
+        th:text="${admission.admissionDate}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Ward:</strong>
+
+    <span th:text="${admission.ward}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Room:</strong>
+
+    <span th:text="${admission.roomNumber}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Bed:</strong>
+
+    <span th:text="${admission.bedNumber}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Reason:</strong>
+
+    <span th:text="${admission.reason}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Notes:</strong>
+
+    <span th:text="${admission.notes}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Status:</strong>
+
+    <span th:text="${admission.status}">
+    </span>
+</p>
+
+
+<div
+    th:if="${admission.status.name() == 'DISCHARGED'}">
+
+    <hr>
+
+    <h2>
+        Discharge Details
+    </h2>
+
+    <p>
+        <strong>Discharged At:</strong>
+
+        <span
+            th:text="${admission.dischargeDate}">
+        </span>
+    </p>
+
+    <p>
+        <strong>Discharged By:</strong>
+
+        <span
+            th:text="${admission.dischargedBy}">
+        </span>
+    </p>
+
+    <p>
+        <strong>Discharge Summary:</strong>
+
+        <span
+            th:text="${admission.dischargeSummary}">
+        </span>
+    </p>
+
+</div>
+
+
+<div
+    th:if="${admission.status.name() == 'ADMITTED'}">
+
+    <a
+        th:href="@{/admissions/{id}/discharge(id=${admission.id})}">
+
+        Discharge Patient
+
+    </a>
+
+</div>
+
+<br><br>
+
+<a href="/admissions">
+    ← Admissions
+</a>
+
+</body>
+
+</html>

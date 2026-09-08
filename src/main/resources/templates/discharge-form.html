@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Discharge Patient</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<h1>Discharge Patient</h1>
+
+<p
+    th:if="${error}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+
+<p>
+    <strong>Admission:</strong>
+
+    <span
+        th:text="${admission.admissionNumber}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Patient:</strong>
+
+    <span
+        th:text="${admission.patient.firstName}">
+    </span>
+
+    <span
+        th:text="${admission.patient.lastName}">
+    </span>
+</p>
+
+
+<p>
+    <strong>Ward / Room / Bed:</strong>
+
+    <span th:text="${admission.ward}"></span>
+    /
+    <span th:text="${admission.roomNumber}"></span>
+    /
+    <span th:text="${admission.bedNumber}"></span>
+</p>
+
+
+<form
+    th:action="@{/admissions/{id}/discharge(id=${admission.id})}"
+    method="post">
+
+    <label>
+        Discharge Summary
+    </label>
+
+    <br>
+
+    <textarea
+        name="dischargeSummary"
+        rows="8"
+        cols="70"
+        required>
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Confirm Discharge
+    </button>
+
+</form>
+
+<br>
+
+<a
+    th:href="@{/admissions/{id}(id=${admission.id})}">
+
+    ← Back
+
+</a>
+
+</body>
+
+</html>
