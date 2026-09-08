@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Admissions</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1300px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eef2f6;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 9px 14px;
+            background: #1f4e78;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+    </style>
+
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>
+            Inpatient Admissions
+        </h1>
+
+        <a
+            href="/admissions/new"
+            class="button">
+
+            + New Admission
+
+        </a>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>Admission No</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Ward</th>
+                <th>Room</th>
+                <th>Bed</th>
+                <th>Admission Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr
+                th:each="admission : ${admissions}">
+
+                <td
+                    th:text="${admission.admissionNumber}">
+                </td>
+
+                <td>
+
+                    <span
+                        th:text="${admission.patient.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${admission.patient.lastName}">
+                    </span>
+
+                </td>
+
+                <td>
+
+                    Dr.
+
+                    <span
+                        th:text="${admission.doctor.firstName}">
+                    </span>
+
+                    <span
+                        th:text="${admission.doctor.lastName}">
+                    </span>
+
+                </td>
+
+                <td
+                    th:text="${admission.ward}">
+                </td>
+
+                <td
+                    th:text="${admission.roomNumber}">
+                </td>
+
+                <td
+                    th:text="${admission.bedNumber}">
+                </td>
+
+                <td
+                    th:text="${admission.admissionDate}">
+                </td>
+
+                <td
+                    th:text="${admission.status}">
+                </td>
+
+                <td>
+
+                    <a
+                        th:href="@{/admissions/{id}(id=${admission.id})}">
+
+                        View
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

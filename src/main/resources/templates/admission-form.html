@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Admission</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+<h1>Admit Patient</h1>
+
+<p
+    th:if="${error}"
+    th:text="${error}"
+    style="color:red;">
+</p>
+
+<form
+    th:action="@{/admissions/save}"
+    th:object="${admission}"
+    method="post">
+
+
+    <label>Patient</label>
+
+    <select
+        name="patientId"
+        required>
+
+        <option value="">
+            Select Patient
+        </option>
+
+        <option
+            th:each="patient : ${patients}"
+            th:value="${patient.id}"
+            th:selected="${selectedPatientId != null
+                && selectedPatientId == patient.id}"
+            th:text="${patient.patientNumber
+                + ' - '
+                + patient.firstName
+                + ' '
+                + patient.lastName}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Responsible Doctor</label>
+
+    <select
+        name="doctorId"
+        required>
+
+        <option value="">
+            Select Doctor
+        </option>
+
+        <option
+            th:each="doctor : ${doctors}"
+            th:value="${doctor.id}"
+            th:text="${'Dr. '
+                + doctor.firstName
+                + ' '
+                + doctor.lastName
+                + ' - '
+                + doctor.specialization}">
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Admission Date & Time</label>
+
+    <input
+        type="datetime-local"
+        th:field="*{admissionDate}"
+        required>
+
+    <br><br>
+
+
+    <label>Ward</label>
+
+    <select
+        th:field="*{ward}"
+        required>
+
+        <option value="">
+            Select Ward
+        </option>
+
+        <option value="General Ward">
+            General Ward
+        </option>
+
+        <option value="Medical Ward">
+            Medical Ward
+        </option>
+
+        <option value="Surgical Ward">
+            Surgical Ward
+        </option>
+
+        <option value="Pediatric Ward">
+            Pediatric Ward
+        </option>
+
+        <option value="Maternity Ward">
+            Maternity Ward
+        </option>
+
+        <option value="ICU">
+            ICU
+        </option>
+
+    </select>
+
+    <br><br>
+
+
+    <label>Room Number</label>
+
+    <input
+        type="text"
+        th:field="*{roomNumber}"
+        required>
+
+    <br><br>
+
+
+    <label>Bed Number</label>
+
+    <input
+        type="text"
+        th:field="*{bedNumber}"
+        required>
+
+    <br><br>
+
+
+    <label>Reason for Admission</label>
+
+    <textarea
+        th:field="*{reason}"
+        rows="4"
+        cols="50"
+        required>
+    </textarea>
+
+    <br><br>
+
+
+    <label>Notes</label>
+
+    <textarea
+        th:field="*{notes}"
+        rows="4"
+        cols="50">
+    </textarea>
+
+    <br><br>
+
+
+    <button type="submit">
+        Admit Patient
+    </button>
+
+</form>
+
+<br>
+
+<a href="/admissions">
+    ← Admissions
+</a>
+
+</body>
+
+</html>

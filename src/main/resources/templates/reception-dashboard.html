@@ -5,26 +5,25 @@
 </a>
 <head>
     <title>Reception Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
-<body>
+<body class="dashboard-page dashboard-reception">
+<div class="dashboard-hero" aria-hidden="true">
+    <div class="dashboard-hero-image"></div>
+    <div class="dashboard-hero-shade"></div>
+    <span class="dashboard-hero-label">Front desk</span>
+</div>
 
 <h1>Receptionist Dashboard</h1>
 
 <p>Welcome Receptionist</p>
-<p>
-    <a href="/appointments">
-        Appointment Management
-    </a>
-</p>
-
-<ul>
-    <li>Register Patient</li>
-    <li>Search Patient</li>
-    <li>Book Appointment</li>
-    <li>Cancel Appointment</li>
-    <li>Reschedule Appointment</li>
-</ul>
+<h3>Quick access</h3>
+<div class="dashboard-actions">
+    <a href="/appointments" class="dashboard-action">Appointment Management <span>→</span></a>
+    <a href="/admissions" class="dashboard-action">Inpatient Admissions <span>→</span></a>
+    <a href="/change-password" class="dashboard-action">Change Password <span>→</span></a>
+</div>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Logout</button>
