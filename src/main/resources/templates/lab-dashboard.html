@@ -8,9 +8,15 @@
 
     <title>Laboratory Dashboard</title>
 
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 
-<body>
+<body class="dashboard-page dashboard-lab">
+<div class="dashboard-hero" aria-hidden="true">
+    <div class="dashboard-hero-image"></div>
+    <div class="dashboard-hero-shade"></div>
+    <span class="dashboard-hero-label">Diagnostics</span>
+</div>
 
 <h1>Laboratory Staff Dashboard</h1>
 
@@ -18,13 +24,10 @@
     Welcome Laboratory Staff
 </p>
 
-<h3>Laboratory Functions</h3>
-
-<p>
-    <a href="/lab/lab-tests">
-        Laboratory Test Requests
-    </a>
-</p>
+<h3>Lab workspace</h3>
+<div class="dashboard-actions">
+    <a href="/lab/lab-tests" class="dashboard-action">Laboratory Test Requests <span>→</span></a>
+</div>
 
 <form th:action="@{/logout}" method="post">
 
