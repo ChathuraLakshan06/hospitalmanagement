@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <a href="/patients">
-    Manage Patients
-</a>
 <head>
     <title>Admin Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/app.css}">
@@ -15,45 +12,6 @@
         <span class="dashboard-hero-label">Care operations</span>
     </div>
     <h1>Admin Dashboard</h1>
-<body>
-<h3>Management</h3>
-
-<p>
-    <a href="/patients">
-        Patient Management
-    </a>
-</p>
-<p>
-    <a href="/admin/staff">
-        Staff Management
-    </a>
-</p>
-<p>
-    <a href="/admin/reports">
-        Reports & Analytics
-    </a>
-</p>
-<p>
-    <a href="/admin/departments">
-        Department Management
-    </a>
-</p>
-<p>
-    <a href="/appointments">
-        Appointment Management
-    </a>
-</p>
-<p>
-    <a href="/doctor/medical-records">
-        Medical Records
-    </a>
-</p>
-<p>
-    <a href="/admin/doctors">
-        Doctor Management
-    </a>
-</p>
-<h1>Admin Dashboard</h1>
 
 <p>Welcome Administrator</p>
 
@@ -62,6 +20,7 @@
 <div class="dashboard-actions">
     <a href="/patients" class="dashboard-action">Patient Management <span>→</span></a>
     <a href="/admin/staff" class="dashboard-action">Staff Management <span>→</span></a>
+    <a href="/admin/reports" class="dashboard-action">Reports &amp; Analytics <span>→</span></a>
     <a href="/admissions" class="dashboard-action">Inpatient Admissions <span>→</span></a>
     <a href="/admin/departments" class="dashboard-action">Department Management <span>→</span></a>
     <a href="/appointments" class="dashboard-action">Appointment Management <span>→</span></a>
